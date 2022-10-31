@@ -15,4 +15,6 @@ VALUES  ("Lead Engineer","180000",1),
         ("Lawyer", "150000",4);
 
 
-INSERT INTO employees ()
+INSERT INTO employees (first_name,last_name,employee_id,manager_id)
+VALUES  ("Mason","Davis",1,NULL),
+        ("Conradson","Dominic",2,1);
