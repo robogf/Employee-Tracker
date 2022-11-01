@@ -72,6 +72,32 @@ function viewEmployees() {
     manageCompany();
     });
 }
+function addEmployee(){
+    roles = []
+    manager = []
+    inquirer.prompt([{
+        name: "newFirst",
+        message: "Enter your new employee's first name"
+    },
+    {
+        name: "newLast",
+        message: "Enter your new employee's last name"
+    },
+    {   
+        type: "list",
+        name: "newRole",
+        message: "Select your new employee's role",
+        choices: roles
+        
+    },
+    {
+        type: "list",
+        name: "newManager",
+        message: "Select your new employee's manager",
+        choices: manager
+    }
+])
+}
 
 function viewRoles() {
     db.query('SELECT * FROM roles', function (err,results){
