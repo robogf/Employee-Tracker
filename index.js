@@ -7,13 +7,13 @@ var db = mysql.createConnection({
     host: 'localhost',
     user: 'root',
 
-    password: 'angel123',
+    password: 'password',
     database: 'companyDB'
 },
 console.log('we made it into database!')
 )
 
-db,connect(function (err) {
+db.connect(function (err) {
     if (err) throw err; 
 })
 
@@ -58,10 +58,32 @@ function manageCompany() {
             break;
 
             case "Quit":
-            exit();
+            quitP();
             break;
 
 
         }
     })
 }
+
+function viewEmployees() {
+    db.query('SELECT * FROM employees;', function (err,results){
+    console.table(results);
+    manageCompany();
+    });
+}
+
+
+
+
+
+
+
+
+
+
+function quitP(){
+    console.log("Thank you for taking an interest in our company ");
+   
+}
+manageCompany()
