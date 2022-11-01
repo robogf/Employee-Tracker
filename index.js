@@ -72,6 +72,7 @@ function viewEmployees() {
     manageCompany();
     });
 }
+
 function addEmployee(){
     roles = []
     manager = []
@@ -110,6 +111,23 @@ function viewDepartments(){
     db.query('SELECT * FROM departments', function (err,results){
         console.table(results);
         manageCompany();
+    });
+}
+
+function addDepartment(){
+    inquirer.prompt ([
+        {
+            type: "input",
+            name: "addDpt",
+            message: "Which department would you like to add?"
+        }
+    ])
+    .then(answer => {
+        const dptSql = 'INSERT INTO departments (department_name) VALUES (?);'
+        db.query(dptSql, answer.addDpt, (err,result) => {
+            if (err) throw err;
+            viewDepartments();
+        });
     });
 }
 
