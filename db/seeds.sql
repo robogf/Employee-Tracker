@@ -16,5 +16,6 @@ VALUES  ("Lead Engineer","180000",1),
 
 
 INSERT INTO employees (first_name,last_name,employee_id,manager_id)
-VALUES  ("Mason","Davis",1,NULL),
-        ("Conradson","Dominic",2,1);
+VALUES  ("Davis","Mason",1,NULL),
+        ("Dominic","Conradson",2,1);
+      
