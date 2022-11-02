@@ -30,7 +30,7 @@ function manageCompany() {
         .then(function (answer) {
             switch (answer.userOptions) {
                 case "View All Employees":
-                    viewEmployees();
+                    viewEmployee();
                     break;
 
                 case "Add Employee":
@@ -66,8 +66,16 @@ function manageCompany() {
         })
 }
 
-function viewEmployees() {
-    db.query('SELECT * FROM employees;', function (err, results) {
+function viewEmployee() {
+    db.query(   `SELECT employees.id, employees.first_name, employees.last_name, role.role_title, departments.department_name AS department,
+    CONCAT (manager.first_name, ' ', manager.last_name) AS manager
+    FROM employees 
+    JOIN roles AS role ON employees.employee_id = role.id 
+    JOIN departments ON role.departments_id = departments.id 
+    LEFT JOIN employees AS manager ON manager.id = employees.manager_id;
+    `
+    
+    , function (err, results) {
         console.table(results);
         manageCompany();
     });
@@ -104,7 +112,7 @@ function addEmployee() {
                 const newRol= newRoleChoice.role
                 params.push(newRol);
 
-                const newMngrSql = 'SELECT * FROM employees';
+                const newMngrSql = 'SELECT manager.id, manager.first_name, manager.last_name FROM employees JOIN employees as manager on manager.id = employees.manager_id';
                 db.query(newMngrSql, (err,data ) => {
                     
                     const manager = data.map(({ id, first_name, last_name }) => ({ name: first_name + " "+ last_name, value: id }));
@@ -125,7 +133,7 @@ function addEmployee() {
 
                         db.query(empSql,params,(err,result) => {
                             if (err) throw err;
-                            viewEmployees();
+                            viewEmployee();
                         })
 
                     })
